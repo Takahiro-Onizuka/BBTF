@@ -1,8 +1,6 @@
 library(LaplacesDemon)
 library(mvtnorm)
 library(GIGrvg)
-#library(TruncatedNormal)
-#library(BayesLogit)
 library(coda)
 library(pgdraw)
 library(tmg)
@@ -14,12 +12,18 @@ library(tmg)
 ## ------------------------------------- ##
 
 
-BBTF.HS.sigmoid <- function(y, x, mc=1000, burn=200, eta=500, k=1, upper, a_sig=0.1, b_sig=0.1, shape="N", trunc=NULL, itr=500){
+BBTF.HS <- function(y, x=1:length(y), mc=10000, burn=2000, eta=500, k=1, upper=T, init.sig=c(0.1,0.1), init.u=c(0.1,0.1), shape="N", itr=5000){
   
   if(shape != "N" & shape != "NI" & shape != "ND"){stop("shape: N (none), NI (nearly isotonic) or ND (nearly decreasing) ")}
   
-  if(is.null(trunc)){ trunc <- 10^(-6) }
+  trunc <- 10^(-6)
   n <- length(y)
+  
+  # hyper parameter
+  a_sig <- init.sig[1]
+  b_sig <- init.sig[2]
+  a_u <- init.u[1]
+  b_u <- init.u[2]
   
   # difference operator
   D1 <- matrix(0, n-1,n)
@@ -62,8 +66,6 @@ BBTF.HS.sigmoid <- function(y, x, mc=1000, burn=200, eta=500, k=1, upper, a_sig=
     
     # hyper parameter
     kappa <- rep(1/2, n)
-    a_u <- 0.1
-    b_u <- 0.1
     
     # initial value
     xi <- rep(1,n)
@@ -142,10 +144,9 @@ BBTF.HS.sigmoid <- function(y, x, mc=1000, burn=200, eta=500, k=1, upper, a_sig=
     
     # hyper parameter
     kappa <- rep(1/2, n)
-    a_rho <- 0.1
-    b_rho <- 0.1
-    a_u <- 0.1
-    b_u <- 0.1#max(abs(c(y[1:(k+1)],1)))
+    init.rho=c(1,1)
+    a_rho <- init.rho[1]
+    b_rho <- init.rho[2]
     
     # initial value
     xi <- rep(1,n)
@@ -227,6 +228,7 @@ BBTF.HS.sigmoid <- function(y, x, mc=1000, burn=200, eta=500, k=1, upper, a_sig=
   return(result)
   
 }
+
 
 
 
