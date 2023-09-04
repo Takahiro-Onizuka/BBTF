@@ -11,9 +11,9 @@ x <- 1:n
 th0 <- sqrt(x)/2
 
 # mcmc
-mc <- 25000
-burn <- 5000
-th <- 10
+mc <- 10500
+burn <- 500
+th <- 5
 thin <- seq(from=1, to=mc-burn, by=th)
 
 # sigmoid approximation
@@ -23,14 +23,14 @@ eta <- 500
 k <- 1
 
 # data generate
-set.seed(123)
+set.seed(1)
 sd <- 1
 theta <- (1/sd)*sqrt(pi/2)
 noise <- rhalfnorm(n, theta)
 y <- th0 - noise
 
 # fitting
-fit <- BBTF.HS(y, x=x, mc=mc, burn=burn, eta=eta, k=k, upper=TRUE, shape="N")
+fit <- BBTF.HS(y, x=x, mc=mc, burn=burn, eta=eta, k=k, upper=TRUE, shape="NI")
 Est <- apply(fit[[1]][thin,], 2, mean)
 CI <- apply(fit[[1]][thin,], 2, quant)
 

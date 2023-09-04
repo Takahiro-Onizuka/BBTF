@@ -12,7 +12,7 @@ library(tmg)
 ## ------------------------------------- ##
 
 
-BBTF.HS <- function(y, x=1:length(y), mc=10000, burn=2000, eta=500, k=1, upper=T, init.sig=c(0.1,0.1), init.u=c(0.1,0.1), shape="N", itr=5000){
+BBTF.HS <- function(y, x=1:length(y), mc=10000, burn=2000, eta=500, k=1, upper=T, init.sig=c(0.1,0.1), init.u=c(1,1), shape="N", itr=5000){
   
   if(shape != "N" & shape != "NI" & shape != "ND"){stop("shape: N (none), NI (nearly isotonic) or ND (nearly decreasing) ")}
   
