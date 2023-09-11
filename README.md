@@ -4,6 +4,6 @@ Onizuka. T., Iwashige. F. and Hashimoto. S. (2023), Bayesian Boundary Trend Filt
 
 The repository includes the following files.
 
-* ```BBTF-HS-function.R```: Implementation of Gibbs sampler of BBTF under horseshoe prior.
+* ```BBTF-HS-function.R```: Implementation of Gibbs sampler for BBTF under horseshoe prior.
 
 * ```BBTF-example.R```: One-shot example of fitting BBTF-HS.
